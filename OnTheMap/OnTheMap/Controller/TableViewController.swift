@@ -11,28 +11,28 @@ import UIKit
 
 class TableViewController: UITableViewController{
     
-    let locationData = PinViewController()
+    let locationData = ParseStudent()
     
     func refresh() {
         self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locationData.hardCodedLocationData().count
+        return (Singleton.sharedInstance.students?.count)!
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let student = locationData.hardCodedLocationData()[indexPath.row]
+        let student = Singleton.sharedInstance.students![indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell")!
-        cell.textLabel?.text = student["firstName"] as! String
-        cell.detailTextLabel?.text = student["mediaURL"] as! String
+        cell.textLabel?.text = student.fullName
+        cell.detailTextLabel?.text = student.mediaURL
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let student = locationData.hardCodedLocationData()[indexPath.row]
-        if let url = NSURL(string: student["mediaURL"] as! String){
+        let student = Singleton.sharedInstance.students![indexPath.row]
+        if let url = NSURL(string: student.mediaURL){
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
         }
     }

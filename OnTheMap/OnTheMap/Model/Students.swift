@@ -23,12 +23,12 @@ struct Students{
     }
     
     init(dictionary: [String:AnyObject]) {
-        objectId = dictionary["objectId"] as? String ?? "123"
-         uniqueKey = dictionary["uniqueKey"] as? String ?? "123"
-         firstName = dictionary["firstName"] as? String ?? "123"
-         lastName = dictionary["lastName"] as? String ?? "123"
-         mapString = dictionary["mapString"] as? String ?? "123"
-         mediaURL = dictionary["mediaURL"] as? String ?? "123"
+         objectId = dictionary["objectId"] as? String ?? "objectId"
+         uniqueKey = dictionary["uniqueKey"] as? String ?? "uniqueKey"
+         firstName = dictionary["firstName"] as? String ?? "firstName"
+         lastName = dictionary["lastName"] as? String ?? "lastName"
+         mapString = dictionary["mapString"] as? String ?? "mapString"
+         mediaURL = dictionary["mediaURL"] as? String ?? "mediaURL"
          latitude = dictionary["latitude"] as? Double ?? 0
          longitude = dictionary["longitude"] as? Double ?? 0
     }

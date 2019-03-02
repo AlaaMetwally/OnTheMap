@@ -11,7 +11,7 @@ class Singleton {
     
     var student: Student? = nil
     var students: [Students]? = [Students]()
-    
+    var objectId: String? = nil
     static let sharedInstance: Singleton = Singleton()
     
 }
