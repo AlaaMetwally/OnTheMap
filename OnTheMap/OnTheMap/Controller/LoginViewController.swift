@@ -17,7 +17,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     
     var password = PasswordTextFieldDelegate()
-    var keyboardOnScreen = false
     var onTheMapConvenience = OnTheMapConvenience()
     
     override func viewDidLoad() {
