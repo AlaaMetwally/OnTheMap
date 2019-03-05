@@ -17,7 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var mapHeight: NSLayoutConstraint!
     @IBOutlet weak var findButton: UIButton!
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var onTheMapConvenience = OnTheMapConvenience()
     var parseStudents = ParseStudent()
@@ -27,8 +27,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.location.placeholder = "Enter Your Location Here"
-        self.mapHeight.constant = 0
+        activityIndicator.isHidden = true
+        location.placeholder = "Enter Your Location Here"
+        mapHeight.constant = 0
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         location.resignFirstResponder()
@@ -110,6 +111,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         }
     }
     @IBAction func findLocation(_ sender: Any) {
+        activityIndicator.isHidden = false
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.gray

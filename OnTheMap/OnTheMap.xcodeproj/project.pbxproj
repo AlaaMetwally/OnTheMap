@@ -86,6 +86,7 @@
 		937825D9221C4A430033FF73 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				93E818DF2225E303008EC352 /* UIViews.swift */,
 				937825DC221C4A8B0033FF73 /* LoginViewController.swift */,
 				93EB54E4221F89B7001CDC71 /* PasswordTextFieldDelegate.swift */,
 				93EB54E6221F90B2001CDC71 /* PinViewController.swift */,
@@ -99,7 +100,6 @@
 		937825DA221C4A540033FF73 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				93E818DF2225E303008EC352 /* UIViews.swift */,
 				93A32F49221C3AED00F0C9B5 /* Main.storyboard */,
 			);
 			path = View;

@@ -15,9 +15,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var debugLabel: UILabel!
     
     var password = PasswordTextFieldDelegate()
     var onTheMapConvenience = OnTheMapConvenience()
+    
+    func debug(text: String) {
+        self.debugLabel.text = text
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +54,12 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func login(_ sender: Any){
+        if (self.emailTextField.text == "") || (self.passwordTextField.text == ""){
+            self.debugLabel.text = "email or password are empty"
+            self.debugLabel.sizeToFit()
+            self.debugLabel.textAlignment = .center
+            return
+        }
         onTheMapConvenience.postSession(email: self.emailTextField.text!,password: self.passwordTextField.text!){
             (parsedResult: [String:AnyObject],error: String?) in
                 self.completeLogin()
