@@ -33,9 +33,7 @@ class MainViewController: UITabBarController {
     @IBAction func logout(){
         onTheMapConvenience.deleteSession{
             performUIUpdatesOnMain {
-                let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginViewController") as! UIViewController
-                self.present(controller, animated: true, completion: nil)
-
+            self.dismiss(animated: true, completion: nil)
             }
         }
     }

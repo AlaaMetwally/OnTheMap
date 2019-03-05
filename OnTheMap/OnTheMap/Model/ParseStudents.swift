@@ -15,8 +15,7 @@ class ParseStudent{
     var onTheMapConvenience = OnTheMapConvenience()
     
     func getStudents(completionHandler handler:@escaping([[String:AnyObject]]?) -> Void){
-        
-        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100")!)
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         onTheMapConvenience.requestHandler(request: request){ (results,error) in

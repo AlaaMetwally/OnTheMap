@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var mapHeight: NSLayoutConstraint!
     @IBOutlet weak var findButton: UIButton!
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     var onTheMapConvenience = OnTheMapConvenience()
     var parseStudents = ParseStudent()
@@ -92,16 +93,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
             annotation.title = "\(fullName)"
             annotation.subtitle = mediaURL
             annotations.append(annotation)
+        
+            let latitude:CLLocationDegrees = students.latitude
+            let longitude:CLLocationDegrees = students.longitude
+            let latDelta:CLLocationDegrees = 0.05
             
-            self.mapView.addAnnotations(annotations)
-            let latitude = CLLocationDegrees(students.latitude)
-            let longitude = CLLocationDegrees(students.longitude)
+            let lonDelta:CLLocationDegrees = 0.05
+            
             let span = MKCoordinateSpan(latitudeDelta: 0.075, longitudeDelta: 0.075)
-            let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude:latitude, longitude: longitude), span: span)
-            PinViewController.map.mapView.setRegion(region, animated: true)
+
+            let location = CLLocationCoordinate2DMake(latitude, longitude)
+            
+            let region = MKCoordinateRegion(center: location, span: span)
+            PinViewController.map.mapView.addAnnotations(annotations)
+            PinViewController.map.mapView.setRegion(region, animated: false)
         }
     }
     @IBAction func findLocation(_ sender: Any) {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        
         let geoCoder = CLGeocoder()
         guard let address = self.location.text else{
             print("location is empty")
@@ -109,6 +124,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         }
         mediaString = address
         geoCoder.geocodeAddressString(mediaString!) { (placemarks, error) in
+            self.activityIndicator.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+            
+            guard error == nil else {
+                print("Could not find your location")
+                return
+            }
             guard
                 let placemarks = placemarks,
                 let locationAddress = placemarks.first?.location?.coordinate
@@ -118,6 +140,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
                     return
             }
             // Use your location
+     
             var annotations = [MKPointAnnotation]()
             self.lat = CLLocationDegrees(locationAddress.latitude)
             self.long = CLLocationDegrees(locationAddress.longitude)
