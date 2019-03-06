@@ -131,6 +131,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
             
             guard error == nil else {
                 print("Could not find your location")
+                self.errorMessageAlert(title: "", message: "Could not find your location")
                 return
             }
             guard

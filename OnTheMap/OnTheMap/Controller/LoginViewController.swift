@@ -61,7 +61,13 @@ class LoginViewController: UIViewController {
             return
         }
         onTheMapConvenience.postSession(email: self.emailTextField.text!,password: self.passwordTextField.text!){
-            (parsedResult: [String:AnyObject],error: String?) in
+            (parsedResult: [String:AnyObject]?,error: String?) in
+            performUIUpdatesOnMain {
+                guard error == nil else{
+                    self.errorMessageAlert(title: "", message: "Could not login")
+                    return
+                }
+            }
                 self.completeLogin()
         }
     }

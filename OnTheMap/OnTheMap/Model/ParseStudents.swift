@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class ParseStudent{
+class ParseStudent: UIViewController{
     
     var session = URLSession.shared
     var onTheMapConvenience = OnTheMapConvenience()
-    
+
     func getStudents(completionHandler handler:@escaping([[String:AnyObject]]?) -> Void){
         var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&&order=-updatedAt")!)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -56,12 +56,17 @@ class ParseStudent{
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"uniqueKey\": \"\(student.uniqueKey)\", \"firstName\": \"\(student.firstName)\", \"lastName\": \"\(student.lastName)\",\"mapString\": \"\(student.mapString)\", \"mediaURL\": \"\(student.mediaURL)\",\"latitude\": \(student.latitude), \"longitude\": \(student.longitude)}".data(using: .utf8)
+        
         onTheMapConvenience.requestHandler(request: request){ (results,error) in
-            
             guard let objectId = results!["objectId"] else{
                 print("there is a problem in object id")
                 return
         }
+            guard error != nil else {
+                print("Could not post student")
+                self.errorMessageAlert(title: "", message: "Could not post student")
+                return
+            }
             handler(objectId as! String)
     }
 }

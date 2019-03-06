@@ -12,7 +12,7 @@ class OnTheMapConvenience{
     var session = URLSession.shared
     var userId: String? = nil
     
-    func postSession(email: String, password: String ,completionHandler handler: @escaping (_ parsedResult: [String:AnyObject],_ error: String?) -> Void){
+    func postSession(email: String, password: String ,completionHandler handler: @escaping (_ parsedResult: [String:AnyObject]?,_ error: String?) -> Void){
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -21,6 +21,10 @@ class OnTheMapConvenience{
         request.httpBody =
             "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         requestHandler(request: request){ (results,error) in
+            if error != nil {
+                handler(nil, error)
+                return
+            }
             guard let account = results!["account"] else{
                 print("no account")
                 return
@@ -73,6 +77,7 @@ class OnTheMapConvenience{
             
             func displayError(_ error: String) {
                 print(error)
+                handler(nil,error)
             }
             
             /* GUARD: Was there an error? */
