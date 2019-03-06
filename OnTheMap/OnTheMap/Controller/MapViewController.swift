@@ -97,10 +97,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         
             let latitude:CLLocationDegrees = students.latitude
             let longitude:CLLocationDegrees = students.longitude
-            let latDelta:CLLocationDegrees = 0.05
-            
-            let lonDelta:CLLocationDegrees = 0.05
-            
+
             let span = MKCoordinateSpan(latitudeDelta: 0.075, longitudeDelta: 0.075)
 
             let location = CLLocationCoordinate2DMake(latitude, longitude)
@@ -118,10 +115,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegat
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         UIApplication.shared.beginIgnoringInteractionEvents()
-        
+
         let geoCoder = CLGeocoder()
         guard let address = self.location.text else{
             print("location is empty")
+            self.errorMessageAlert(title: "", message: "location is empty")
             return
         }
         mediaString = address

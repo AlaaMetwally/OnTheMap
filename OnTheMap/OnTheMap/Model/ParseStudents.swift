@@ -62,7 +62,7 @@ class ParseStudent: UIViewController{
                 print("there is a problem in object id")
                 return
         }
-            guard error != nil else {
+            guard error == nil else {
                 print("Could not post student")
                 self.errorMessageAlert(title: "", message: "Could not post student")
                 return
